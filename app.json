@@ -1,0 +1,26 @@
+{
+  "id": "22fa0c82-2e3b-42c3-8927-a688b6809bee",
+  "name": "Opmetrix Business Central API Extensions",
+  "publisher": "Opmetrix",
+  "version": "1.0.0.11",
+  "brief": "Extends the OData API for Opmetrix integration",
+  "description": "Extends the OData API with additional endpoints to be able to access stock locations, tax, special pricing",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "http://help.opmetrix.com/",
+  "url": "https://www.opmetrix.com",
+  "logo": "opmetrix1024-appstore.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "14.0.0.0",
+  "application": "14.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "contextSensitiveHelpUrl": "http://help.opmetrix.com/",
+  "showMyCode": true,
+  "runtime": "3.0"
+}
