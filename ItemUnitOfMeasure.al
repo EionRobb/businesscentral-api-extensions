@@ -1,51 +1,50 @@
-page 50130 "Item Entity Extension"
+page 50133 "Item Unit Of Measure"
 {
     PageType = API;
-    Caption = 'Item Entity Extension';
+    Caption = 'Item Unit Of Measure';
     APIPublisher = 'Opmetrix';
     APIGroup = 'opmetrix';
     APIVersion = 'v1.0';
-    EntityName = 'item';
-    EntitySetName = 'items';
+    EntityName = 'itemUnitOfMeasure';
+    EntitySetName = 'itemUnitOfMeasures';
     DelayedInsert = true;
 
-    SourceTable = "Item";
-    //SourceTable = 27;
-    ODataKeyFields = Id;
+    SourceTable = "Item Unit of Measure";
+    //SourceTable = 5404;
 
     layout
     {
         area(Content)
         {
-            field("ID"; ID)
+            field("itemNumber"; "Item No.")
             {
                 ApplicationArea = All;
             }
-            field("itemNumber"; "No.")
+            field("unitOfMeasureCode"; "Code")
             {
                 ApplicationArea = All;
             }
-            field("generalProductPostingGroupCode"; "Gen. Prod. Posting Group")
+            field("quantityPerUnitOfMeasure"; "Qty. per Unit of Measure")
             {
                 ApplicationArea = All;
             }
-            field("taxProductPostingGroupCode"; "VAT Prod. Posting Group")
+            field("length"; Length)
             {
                 ApplicationArea = All;
             }
-            field("discountGroup"; "Item Disc. Group")
+            field("width"; Width)
             {
                 ApplicationArea = All;
             }
-            field("allowInvoiceDiscount"; "Allow Invoice Disc.")
+            field("height"; Height)
             {
                 ApplicationArea = All;
             }
-            field("salesUnitOfMeasureCode"; "Sales Unit of Measure")
+            field("cubage"; Cubage)
             {
                 ApplicationArea = All;
             }
-            field("purchaseUnitOfMeasureCode"; "Purch. Unit of Measure")
+            field("weight"; Weight)
             {
                 ApplicationArea = All;
             }
