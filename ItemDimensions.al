@@ -13,8 +13,8 @@ query 50129 "Item Dimensions Extension"
 
         dataitem(defaultDimensions; "Default Dimension")
         {
-            DataItemTableFilter = "Table ID" = const (27);
-            column("customerNumber"; "No.") { }
+            DataItemTableFilter = "Table ID" = const(27);
+            column("itemNumber"; "No.") { }
             column("dimensionCode"; "Dimension Code") { }
             column("dimensionValueCode"; "Dimension Value Code") { }
             dataitem(dimensions; "Dimension")
