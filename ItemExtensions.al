@@ -49,6 +49,10 @@ page 50130 "Item Entity Extension"
             {
                 ApplicationArea = All;
             }
+            field("salesBlocked"; "Sales Blocked")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }
