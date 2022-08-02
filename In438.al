@@ -1,10 +1,13 @@
-codeunit 00000 "?????"
+codeunit 50129 "PrepaymentsPush"
 {
 
 
     trigger OnRun()
     begin
     end;
+
+    var
+        KeyNotFoundError: Label 'Field "%1" must be part of the primary key in the Table "%2".';
 
     //PTKLibrarySales4PS.Codeunit.al
     procedure CreatePaymentAndApplytoInvoice(var GenJournalLine: Record "Gen. Journal Line"; CustomerNo: Code[20]; AppliesToDocNo: Code[20]; Amount: Decimal)
@@ -28,16 +31,18 @@ GenJournalLine."Account Type"::Customer, CustomerNo, Amount);
         GenJournalLine.Modify(true);
         /*LibraryERM.*/
         PostGeneralJnlLine(GenJournalLine);
-    end;I8Q8FVACN
-    
+    end;
+
     local procedure CreateGeneralJournalBatch(var GenJournalBatch: Record "Gen. Journal Batch")
     var
         GenJournalTemplate: Record "Gen. Journal Template";
     begin
         GenJournalTemplate.SetRange(Recurring, false);
         GenJournalTemplate.SetRange(Type, GenJournalTemplate.Type::General);
-        /*LibraryERM.*/FindGenJournalTemplate(GenJournalTemplate);
-        /*LibraryERM.*/CreateGenJournalBatch(GenJournalBatch, GenJournalTemplate.Name);
+        /*LibraryERM.*/
+        FindGenJournalTemplate(GenJournalTemplate);
+        /*LibraryERM.*/
+        CreateGenJournalBatch(GenJournalBatch, GenJournalTemplate.Name);
     end;
 
     //PTKLibraryERM4PS.Codeunit.al
@@ -119,13 +124,26 @@ GenJournalLine."Account Type"::Customer, CustomerNo, Amount);
                                                                                                                                                                           BalAccountNo: Code[20];
                                                                                                                                                                           Amount: Decimal)
     begin
-        /*LibraryJournals.*/CreateGenJournalLine(GenJournalLine, JournalTemplateName, JournalBatchName, DocumentType, AccountType, AccountNo,
-          BalAccountType, BalAccountNo, Amount);
+        /*LibraryJournals.*/
+        CreateGenJournalLine(GenJournalLine, JournalTemplateName, JournalBatchName, DocumentType, AccountType, AccountNo,
+BalAccountType, BalAccountNo, Amount);
     end;
 
     procedure PostGeneralJnlLine(GenJournalLine: Record "Gen. Journal Line")
     begin
         CODEUNIT.Run(CODEUNIT::"Gen. Jnl.-Post Batch", GenJournalLine);
+    end;
+
+    procedure FindGeneralJournalSourceCode(): Code[10]
+    var
+        GenJournalTemplate: Record "Gen. Journal Template";
+    begin
+        // Find general journal source code
+        GenJournalTemplate.SetRange(Type, GenJournalTemplate.Type::General);
+        GenJournalTemplate.SetRange(Recurring, false);
+        GenJournalTemplate.SetFilter("Source Code", '<>%1', '');
+        GenJournalTemplate.FindFirst;
+        exit(GenJournalTemplate."Source Code");
     end;
 
     //PTKLibraryJournals4PS.Codeunit.al
@@ -136,9 +154,9 @@ GenJournalLine."Account Type"::Customer, CustomerNo, Amount);
                                                                                                                                                                 Amount: Decimal)
     var
         GenJournalBatch: Record "Gen. Journal Batch";
-                                                                                                                                                                NoSeries: Record "No. Series";
-                                                                                                                                                                NoSeriesMgt: Codeunit NoSeriesManagement;
-                                                                                                                                                                RecRef: RecordRef;
+        NoSeries: Record "No. Series";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+        RecRef: RecordRef;
     begin
         // Find a balanced template/batch pair.
         GenJournalBatch.Get(JournalTemplateName, JournalBatchName);
@@ -161,7 +179,7 @@ GenJournalLine."Account Type"::Customer, CustomerNo, Amount);
             GenJournalLine.Validate(
               "Document No.", /*LibraryUtility.*/GenerateRandomCode(GenJournalLine.FieldNo("Document No."), DATABASE::"Gen. Journal Line"));
         GenJournalLine.Validate("External Document No.", GenJournalLine."Document No.");  // Unused but required for vendor posting.
-        GenJournalLine.Validate("Source Code", LibraryERM.FindGeneralJournalSourceCode);  // Unused but required for AU, NZ builds
+        GenJournalLine.Validate("Source Code", /*LibraryERM.*/FindGeneralJournalSourceCode);  // Unused but required for AU, NZ builds
         GenJournalLine.Validate("Bal. Account Type", BalAccountType);
         GenJournalLine.Validate("Bal. Account No.", BalAccountNo);
         GenJournalLine.Modify(true);
@@ -201,5 +219,82 @@ GenJournalLine."Account Type"::Customer, CustomerNo, Amount);
     procedure ConvertNumericToText(NumericCode: Text): Text
     begin
         exit(ConvertStr(NumericCode, '0123456789', 'ABCDEFGHIJ'));
+    end;
+
+    procedure GetNewLineNo(RecRef: RecordRef; FieldNo: Integer): Integer
+    var
+        RecRef2: RecordRef;
+        FieldRef: FieldRef;
+        FieldRef2: FieldRef;
+        KeyRef: KeyRef;
+        FieldCount: Integer;
+        LineNumberFound: Boolean;
+    begin
+        // Find the value of Line No. for a new line in the Record passed as Record Ref.
+        // 1. It is assumed that the field passed is part of the primary key.
+        // 2. It is assumed that all the primary key fields except Line No. field are already validated on the record.
+        RecRef2.Open(RecRef.Number, false, CompanyName);
+        KeyRef := RecRef.KeyIndex(1);  // The Primary Key always has index as 1.
+        for FieldCount := 1 to KeyRef.FieldCount do begin
+            FieldRef := KeyRef.FieldIndex(FieldCount);
+            if FieldRef.Number <> FieldNo then begin
+                FieldRef2 := RecRef2.Field(FieldRef.Number);
+                FieldRef2.SetRange(FieldRef.Value);  // Set filter on fields other than Line No with value as filled in on RecRef.
+            end else
+                LineNumberFound := true;
+        end;
+
+        if not LineNumberFound then begin
+            FieldRef := RecRef2.Field(FieldNo);
+            Error(StrSubstNo(KeyNotFoundError, FieldRef.Name, RecRef2.Name));
+        end;
+
+        if RecRef2.FindLast then begin
+            FieldRef := RecRef2.Field(FieldNo);
+            FieldCount := FieldRef.Value;
+        end else
+            FieldCount := 0;
+        exit(FieldCount + 10000);  // Add 10000 to the last Line No.
+    end;
+
+    procedure GenerateGUID(): Code[10]
+    var
+        NoSeries: Record "No. Series";
+        NoSeriesLine: Record "No. Series Line";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        if not NoSeries.Get('GUID') then begin
+            NoSeries.Init;
+            NoSeries.Validate(Code, 'GUID');
+            NoSeries.Validate("Default Nos.", true);
+            NoSeries.Validate("Manual Nos.", true);
+            NoSeries.Insert(true);
+
+            CreateNoSeriesLine(NoSeriesLine, NoSeries.Code, '', '');
+        end;
+
+        exit(NoSeriesMgt.GetNextNo(NoSeries.Code, WorkDate, true));
+    end;
+
+    procedure CreateNoSeriesLine(var NoSeriesLine: Record "No. Series Line"; SeriesCode: Code[20]; StartingNo: Code[20]; EndingNo: Code[20])
+    var
+        RecRef: RecordRef;
+    begin
+        NoSeriesLine.Init;
+        NoSeriesLine.Validate("Series Code", SeriesCode);
+        RecRef.GetTable(NoSeriesLine);
+        NoSeriesLine.Validate("Line No.", GetNewLineNo(RecRef, NoSeriesLine.FieldNo("Line No.")));
+
+        if StartingNo = '' then
+            NoSeriesLine.Validate("Starting No.", PadStr(InsStr(SeriesCode, '00000000', 3), 10))
+        else
+            NoSeriesLine.Validate("Starting No.", StartingNo);
+
+        if EndingNo = '' then
+            NoSeriesLine.Validate("Ending No.", PadStr(InsStr(SeriesCode, '99999999', 3), 10))
+        else
+            NoSeriesLine.Validate("Ending No.", EndingNo);
+
+        NoSeriesLine.Insert(true)
     end;
 }
