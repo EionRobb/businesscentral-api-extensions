@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Publish: Your own server",
+            "name": "Publish: Opmetrix cloud sandbox",
             "type": "al",
             "request": "launch",
             "environmentType": "Sandbox",
@@ -21,20 +21,21 @@
             "primaryTenantDomain": "opmetrix.onmicrosoft.com"
         },
         {
-            "name": "Microsoft cloud sandbox",
-            "request": "launch",
+            "name": "Attach: Opmetrix cloud sandbox",
             "type": "al",
+            "request": "attach",
             "environmentType": "Sandbox",
-            "environmentName": "sandbox",
-            "startupObjectId": 22,
-            "startupObjectType": "Page",
+            "server": "https://businesscentral.dynamics.com/43e728f5-a0d9-484d-9971-db0137ca2c70/Sandbox",
+            "serverInstance": "BC",
             "breakOnError": true,
-            "launchBrowser": true,
-            "enableLongRunningSqlStatements": true,
+            "breakOnRecordWrite": false,
+            "breakOnNext": "WebServiceClient",
             "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            "longRunningSqlStatementsThreshold": 500,
+            "numberOfSqlStatements": 10,
             "tenant": "43e728f5-a0d9-484d-9971-db0137ca2c70",
-            "primaryTenantDomain": "opmetrix.onmicrosoft.com",
-            
+            "primaryTenantDomain": "opmetrix.onmicrosoft.com"
         }
     ]
 }
