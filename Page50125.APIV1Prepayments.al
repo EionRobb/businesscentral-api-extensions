@@ -26,6 +26,12 @@ page 50125 "Prepayments"
                     Caption = 'number', Locked = true;
                     Editable = false;
                 }
+                field(prepaymentInvoiceNumber; "Last Prepayment No.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'prepaymentInvoiceNumber', Locked = true;
+                    Editable = false;
+                }
             }
         }
     }
@@ -35,9 +41,7 @@ page 50125 "Prepayments"
         errTotalPrepaymentAmountInvoiced: Label 'Total prepayment amount invoiced greater than 0.';
 
     [ServiceEnabled]
-    procedure ApplyPrepayment()
-    var
-        actionContext: WebServiceActionContext;
+    procedure ApplyPrepayment(var actionContext: WebServiceActionContext)
     begin
         // Create Prepayment Invoice
         CreatePrepaymentInvoice(Rec);
@@ -47,6 +51,7 @@ page 50125 "Prepayments"
 
         actionContext.SetObjectType(ObjectType::Page);
         actionContext.SetObjectId(Page::Prepayments);
+        //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");
         actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
         actionContext.SetResultCode(WebServiceActionResultCode::Created);
     end;
@@ -62,7 +67,7 @@ page 50125 "Prepayments"
         SalesHeader.TestField("Bill-to Customer No.");
         SalesHeader.TestField("Posting Date");
         SalesHeader.TestField("Due Date");
-        SalesHeader.TestField("Prices Including VAT", true);
+        //SalesHeader.TestField("Prices Including VAT", true);
 
         // Update Sales Order Prepayment Fields
         UpdateSalesOrderPrepaymentFields(SalesHeader);
