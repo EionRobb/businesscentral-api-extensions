@@ -40,6 +40,20 @@ page 50125 "Prepayments"
 
         errTotalPrepaymentAmountInvoiced: Label 'Total prepayment amount invoiced greater than 0.';
 
+
+    [ServiceEnabled]
+    procedure CreatePrepayment(var actionContext: WebServiceActionContext)
+    begin
+        // Create Prepayment Invoice
+        CreatePrepaymentInvoice(Rec);
+
+        actionContext.SetObjectType(ObjectType::Page);
+        actionContext.SetObjectId(Page::Prepayments);
+        //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");  // Already set as part of the Rec update
+        actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        actionContext.SetResultCode(WebServiceActionResultCode::Created);
+    end;
+
     [ServiceEnabled]
     procedure ApplyPrepayment(var actionContext: WebServiceActionContext)
     begin
@@ -51,7 +65,7 @@ page 50125 "Prepayments"
 
         actionContext.SetObjectType(ObjectType::Page);
         actionContext.SetObjectId(Page::Prepayments);
-        //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");
+        //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");  // Already set as part of the Rec update
         actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
         actionContext.SetResultCode(WebServiceActionResultCode::Created);
     end;

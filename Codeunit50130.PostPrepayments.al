@@ -336,6 +336,7 @@ codeunit 50130 "Post Prepayments"
                     SalesHeader.TestField("Prepmt. Cr. Memo No.", '');
                     if SalesHeader."Prepayment No." = '' then
                         if not PreviewMode then begin
+                            //TODO set the "Prepayment No. Series" if one hasn't yet been set, to allow capturing payments on old orders
                             SalesHeader.TestField("Prepayment No. Series");
                             SalesHeader."Prepayment No." := NoSeriesMgt.GetNextNo(SalesHeader."Prepayment No. Series", SalesHeader."Posting Date", true);
                             ModifyHeader := true;
