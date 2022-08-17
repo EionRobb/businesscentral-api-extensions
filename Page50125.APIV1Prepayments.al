@@ -9,10 +9,11 @@ page 50125 "Prepayments"
     DelayedInsert = true;
     EntityName = 'prepayments';
     EntitySetName = 'prepayments';
-    ODataKeyFields = "No.";
+    ODataKeyFields = SystemId;
     PageType = API;
     SourceTable = "Sales Header";
     //Extensible = false;
+    InsertAllowed = true;
 
     layout
     {
@@ -20,11 +21,28 @@ page 50125 "Prepayments"
         {
             repeater(Group)
             {
+                field(id; SystemId)
+                {
+                    ApplicationArea = All;
+                    Caption = 'id', Locked = true;
+                    Editable = false;
+                    //trigger OnValidate()
+                    //begin
+                    //    //SalesHeader.GetBySystemId(Id); //TODO needs newer API version
+                    //    SalesHeader.SETRANGE(Id, Id);
+                    //    IF NOT SalesHeader.FINDFIRST() THEN
+                    //        Error(errCannotFindSale, Id);
+                    //end;
+                }
                 field(number; "No.")
                 {
                     ApplicationArea = All;
                     Caption = 'number', Locked = true;
                     Editable = false;
+                    //trigger OnValidate()
+                    //begin
+                    //    SalesHeader.Get(SalesHeader."Document Type"::Order, "No.");
+                    //end;
                 }
                 field(prepaymentInvoiceNumber; "Last Prepayment No.")
                 {
@@ -39,7 +57,35 @@ page 50125 "Prepayments"
     var
 
         errTotalPrepaymentAmountInvoiced: Label 'Total prepayment amount invoiced greater than 0.';
+        errCannotFindSale: Label 'The order with ID %1 cannot be found.', Comment = '%1';
+        SalesHeader: Record "Sales Header";
 
+    trigger OnModifyRecord(): Boolean
+    begin
+        CreatePrepaymentInvoice(Rec);
+    end;
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        if not IsNullGuid(SystemId) then begin
+            //SalesHeader.GetBySystemId(SystemId); //TODO needs newer API version
+            SalesHeader.SETRANGE(SystemId, SystemId);
+            IF NOT SalesHeader.FINDFIRST() THEN
+                Error(errCannotFindSale, SystemId);
+        end else begin
+            SalesHeader.Get(SalesHeader."Document Type"::Order, "No.");
+        end;
+        Rec := SalesHeader;
+
+        CreatePrepaymentInvoice(Rec);
+
+        exit(false);
+    end;
+
+    trigger OnOpenPage()
+    begin
+        SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::Order);
+    end;
 
     [ServiceEnabled]
     procedure CreatePrepayment(var actionContext: WebServiceActionContext)
@@ -50,7 +96,8 @@ page 50125 "Prepayments"
         actionContext.SetObjectType(ObjectType::Page);
         actionContext.SetObjectId(Page::Prepayments);
         //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");  // Already set as part of the Rec update
-        actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        //actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
         actionContext.SetResultCode(WebServiceActionResultCode::Created);
     end;
 
@@ -66,7 +113,8 @@ page 50125 "Prepayments"
         actionContext.SetObjectType(ObjectType::Page);
         actionContext.SetObjectId(Page::Prepayments);
         //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");  // Already set as part of the Rec update
-        actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        //actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
+        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
         actionContext.SetResultCode(WebServiceActionResultCode::Created);
     end;
 
