@@ -13,10 +13,9 @@ query 50138 "ItemAttributes"
     {
         dataitem(Item; Item)
         {
-            column(Number; "No.")
+            column(itemNumber; "No.")
             {
             }
-
 
             dataitem(Item_Attribute_Value_Mapping; "Item Attribute Value Mapping")
             {
@@ -32,14 +31,14 @@ query 50138 "ItemAttributes"
                 dataitem(QueryElement6; "Item Attribute")
                 {
                     DataItemLink = ID = Item_Attribute_Value_Mapping."Item Attribute ID";
-                    column(Name; Name)
+                    column(dimensionCode; Name)
                     {
                     }
                     dataItem(Queryelement10; "Item Attribute Value")
                     {
                         DataItemLink = "Attribute ID" = Item_Attribute_Value_Mapping."Item Attribute ID",
                         ID = Item_Attribute_Value_Mapping."Item Attribute Value ID";
-                        column(Value; Value)
+                        column(dimensionValueCode; Value)
                         {
                         }
                         column(Numeric_Value; "Numeric Value")
