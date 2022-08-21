@@ -21,7 +21,7 @@ query 50138 "ItemAttributes"
             {
                 DataItemLink = "No." = Item."No.";
 
-                column(Item_Attribute_ID; "Item Attribute ID")
+                column(dimensionCode; "Item Attribute ID")
                 {
                 }
 
@@ -31,7 +31,7 @@ query 50138 "ItemAttributes"
                 dataitem(QueryElement6; "Item Attribute")
                 {
                     DataItemLink = ID = Item_Attribute_Value_Mapping."Item Attribute ID";
-                    column(dimensionCode; Name)
+                    column(Name; Name)
                     {
                     }
                     dataItem(Queryelement10; "Item Attribute Value")
