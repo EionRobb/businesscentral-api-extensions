@@ -31,7 +31,10 @@ query 50138 "ItemAttributes"
                 dataitem(QueryElement6; "Item Attribute")
                 {
                     DataItemLink = ID = Item_Attribute_Value_Mapping."Item Attribute ID";
-                    column(Name; Name)
+                    column(name; Name)
+                    {
+                    }
+                    column(UOM; "Unit of Measure")
                     {
                     }
                     dataItem(Queryelement10; "Item Attribute Value")
