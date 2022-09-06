@@ -1,4 +1,3 @@
-//https://github.com/YevgenKarpinka/Sprut_API_v16/blob/62cd5e33de49f797f94ddfe56e7f7a01eb7649aa/Page/Page50003.APIV2SalesInvoice.al
 page 50125 "Prepayments"
 {
     APIPublisher = 'Opmetrix';
@@ -13,7 +12,7 @@ page 50125 "Prepayments"
     PageType = API;
     SourceTable = "Sales Header";
     //Extensible = false;
-    InsertAllowed = true;
+    //InsertAllowed = true;
 
     layout
     {
@@ -21,71 +20,39 @@ page 50125 "Prepayments"
         {
             repeater(Group)
             {
-                field(id; SystemId)
+                field(SalesOrderId; SystemId)
                 {
-                    ApplicationArea = All;
-                    Caption = 'id', Locked = true;
+                    Caption = 'SalesOrderId', Locked = true;
                     Editable = false;
-                    //trigger OnValidate()
-                    //begin
-                    //    //SalesHeader.GetBySystemId(Id); //TODO needs newer API version
-                    //    SalesHeader.SETRANGE(Id, Id);
-                    //    IF NOT SalesHeader.FINDFIRST() THEN
-                    //        Error(errCannotFindSale, Id);
-                    //end;
                 }
-                field(number; "No.")
+                field(SalesOrderNumber; "No.")
                 {
-                    ApplicationArea = All;
-                    Caption = 'number', Locked = true;
+                    Caption = 'SalesOrderNumber', Locked = true;
                     Editable = false;
-                    //trigger OnValidate()
-                    //begin
-                    //    SalesHeader.Get(SalesHeader."Document Type"::Order, "No.");
-                    //end;
                 }
-                field(prepaymentInvoiceNumber; "Last Prepayment No.")
+                field(PrepaymentInvoiceNumber; "Last Prepayment No.")
                 {
-                    ApplicationArea = All;
-                    Caption = 'prepaymentInvoiceNumber', Locked = true;
+                    Caption = 'PrepaymentInvoiceNumber', Locked = true;
+                    Editable = false;
+                }
+                field(CustomerNumber; "Bill-to Customer No.")
+                {
+                    Caption = 'CustomerNumber', Locked = true;
+                    Editable = false;
+                }
+                field(ExternalDocumentNumber; "External Document No.")
+                {
+                    Caption = 'ExternalDocumentNumber', Locked = true;
+                    Editable = false;
+                }
+                field(AmountIncludingVAT; "Amount Including VAT")
+                {
+                    Caption = 'AmountIncludingVAT', Locked = true;
                     Editable = false;
                 }
             }
         }
     }
-
-    var
-
-        errTotalPrepaymentAmountInvoiced: Label 'Total prepayment amount invoiced greater than 0.';
-        errCannotFindSale: Label 'The order with ID %1 cannot be found.', Comment = '%1';
-        SalesHeader: Record "Sales Header";
-
-    trigger OnModifyRecord(): Boolean
-    begin
-        CreatePrepaymentInvoice(Rec);
-    end;
-
-    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
-    begin
-        if not IsNullGuid(SystemId) then begin
-            //SalesHeader.GetBySystemId(SystemId); //TODO needs newer API version
-            SalesHeader.SETRANGE(SystemId, SystemId);
-            IF NOT SalesHeader.FINDFIRST() THEN
-                Error(errCannotFindSale, SystemId);
-        end else begin
-            SalesHeader.Get(SalesHeader."Document Type"::Order, "No.");
-        end;
-        Rec := SalesHeader;
-
-        CreatePrepaymentInvoice(Rec);
-
-        exit(false);
-    end;
-
-    trigger OnOpenPage()
-    begin
-        SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::Order);
-    end;
 
     [ServiceEnabled]
     procedure CreatePrepayment(var actionContext: WebServiceActionContext)
@@ -101,24 +68,8 @@ page 50125 "Prepayments"
         actionContext.SetResultCode(WebServiceActionResultCode::Created);
     end;
 
-    [ServiceEnabled]
-    procedure ApplyPrepayment(var actionContext: WebServiceActionContext)
-    begin
-        // Create Prepayment Invoice
-        CreatePrepaymentInvoice(Rec);
-
-        // Create and Assign Prepayment Ledger Entry
-        CreatePrepaymentLedgerEntry(Rec);
-
-        actionContext.SetObjectType(ObjectType::Page);
-        actionContext.SetObjectId(Page::Prepayments);
-        //actionContext.AddEntityKey(Rec.FieldNo("Last Prepayment No."), Rec."Last Prepayment No.");  // Already set as part of the Rec update
-        //actionContext.AddEntityKey(Rec.FieldNo("No."), Rec."No.");
-        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
-        actionContext.SetResultCode(WebServiceActionResultCode::Created);
-    end;
-
     local procedure CreatePrepaymentInvoice(var SalesHeader: Record "Sales Header")
+    //https://github.com/YevgenKarpinka/Sprut_API_v16/blob/62cd5e33de49f797f94ddfe56e7f7a01eb7649aa/Page/Page50003.APIV2SalesInvoice.al
     var
         PostPrepayments: Codeunit "Post Prepayments";
     begin
@@ -146,6 +97,7 @@ page 50125 "Prepayments"
         totalOrderAmount: Decimal;
         diffLineAmount: Decimal;
         diffAmounts: Decimal;
+        errTotalPrepaymentAmountInvoiced: Label 'Total prepayment amount invoiced greater than 0.';
     begin
         // Update Sales Order Header Fields
         orderModified := false;
@@ -193,121 +145,5 @@ page 50125 "Prepayments"
             end;
             salesOrderLines.Modify(true);
         until salesOrderLines.Next() = 0;
-    end;
-
-    local procedure CreatePrepaymentLedgerEntry(var SalesHeader: Record "Sales Header")
-    //https://github.com/StefanMaron/MSDyn365BC.Code.History/blob/ac07586666c093cf6c764cf034973e9b590ef203/BaseApp/Source/Base%20Application/O365SalesInvoicePayment.Codeunit.al
-    var
-        InvoiceHeader: Record "Sales Invoice Header";
-        PaymentRegistrationBuffer: Record "Payment Registration Buffer";
-        PaymentRegistrationMgt: Codeunit "Payment Registration Mgt.";
-    begin
-        if not InvoiceHeader.Get(SalesHeader."Last Prepayment No.") then
-            Error(errTotalPrepaymentAmountInvoiced, SalesHeader."Last Prepayment No.");
-
-        PaymentRegistrationBuffer.PopulateTable();
-        PaymentRegistrationBuffer.SetRange("Document Type", PaymentRegistrationBuffer."Document Type"::Invoice);
-        PaymentRegistrationBuffer.SetRange("Document No.", SalesHeader."Last Prepayment No.");
-        if not PaymentRegistrationBuffer.FindFirst() then
-            Error(errTotalPrepaymentAmountInvoiced, SalesHeader."Last Prepayment No.");
-        PaymentRegistrationBuffer.Validate("Payment Made", true);
-        PaymentRegistrationBuffer.Validate("Limit Amount Received", true);
-        PaymentRegistrationBuffer.Modify(true);
-
-        PostPaymentRegistration(PaymentRegistrationBuffer);
-    end;
-
-    local procedure PostPaymentRegistration(var TempPaymentRegistrationBuffer: Record "Payment Registration Buffer" temporary)
-    //https://github.com/StefanMaron/MSDyn365BC.Code.History/blob/7d293ac633253d200547ad7aab98bfd557aa1e6d/BaseApp/Source/Base%20Application/PaymentRegistrationMgt.Codeunit.al
-    var
-        BankAcc: Record "Bank Account";
-        PaymentRegistrationSetup: Record "Payment Registration Setup";
-        GenJournalLine: Record "Gen. Journal Line";
-        GenJnlBatch: Record "Gen. Journal Batch";
-        GenJnlTemplate: Record "Gen. Journal Template";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
-        GenJnlPostBatch: Codeunit "Gen. Jnl.-Post Batch";
-        PaymentToleranceManagement: Codeunit "Payment Tolerance Management";
-        EmptyDateReceivedErr: Label 'Date Received is missing for line with Document No. %1.';
-    begin
-        PaymentRegistrationSetup.Get(UserId);
-        PaymentRegistrationSetup.ValidateMandatoryFields(true);
-        GenJnlTemplate.Get(PaymentRegistrationSetup."Journal Template Name");
-        GenJnlBatch.Get(PaymentRegistrationSetup."Journal Template Name", PaymentRegistrationSetup."Journal Batch Name");
-
-        GenJournalLine.SetRange("Journal Template Name", PaymentRegistrationSetup."Journal Template Name");
-        GenJournalLine.SetRange("Journal Batch Name", PaymentRegistrationSetup."Journal Batch Name");
-        if GenJournalLine.FindLast() then
-            GenJournalLine.SetFilter("Line No.", '>%1', GenJournalLine."Line No.");
-
-        //PaymentToleranceManagement.SetSuppressCommit(PreviewMode);
-        TempPaymentRegistrationBuffer.FindSet();
-        repeat
-            if TempPaymentRegistrationBuffer."Date Received" = 0D then
-                Error(EmptyDateReceivedErr, TempPaymentRegistrationBuffer."Document No.");
-
-            UpdatePmtDiscountDateOnCustLedgerEntry(TempPaymentRegistrationBuffer);
-
-            GenJournalLine.Init();
-            //GenJournalLine.SetSuppressCommit(PreviewMode);
-            GenJournalLine."Journal Template Name" := PaymentRegistrationSetup."Journal Template Name";
-            GenJournalLine."Journal Batch Name" := PaymentRegistrationSetup."Journal Batch Name";
-            GenJournalLine."Line No." += 10000;
-
-            GenJournalLine."Source Code" := GenJnlTemplate."Source Code";
-            GenJournalLine."Reason Code" := GenJnlBatch."Reason Code";
-            GenJournalLine."Posting No. Series" := GenJnlBatch."Posting No. Series";
-
-            GenJournalLine.Validate("Posting Date", TempPaymentRegistrationBuffer."Date Received");
-            GenJournalLine.Validate("Account Type", GenJournalLine."Account Type"::Customer);
-            if TempPaymentRegistrationBuffer."Document Type" = TempPaymentRegistrationBuffer."Document Type"::"Credit Memo" then
-                GenJournalLine.Validate("Document Type", GenJournalLine."Document Type"::Refund)
-            else
-                GenJournalLine.Validate("Document Type", GenJournalLine."Document Type"::Payment);
-            GenJournalLine."Document No." := NoSeriesMgt.GetNextNo(GenJnlBatch."No. Series", "Posting Date", false);
-            GenJournalLine.Validate("Bal. Account Type", PaymentRegistrationSetup.GetGLBalAccountType);
-            GenJournalLine.Validate("Account No.", TempPaymentRegistrationBuffer."Source No.");
-            GenJournalLine.Validate(Amount, -TempPaymentRegistrationBuffer."Amount Received");
-            GenJournalLine.Validate("Bal. Account No.", PaymentRegistrationSetup."Bal. Account No.");
-            GenJournalLine.Validate("Payment Method Code", TempPaymentRegistrationBuffer."Payment Method Code");
-            if GenJournalLine."Bal. Account Type" = "Bal. Account Type"::"Bank Account" then begin
-                BankAcc.Get("Bal. Account No.");
-                GenJournalLine.Validate("Currency Code", BankAcc."Currency Code");
-            end;
-            CheckCurrencyCode(TempPaymentRegistrationBuffer, GenJournalLine, PaymentRegistrationSetup);
-            GenJournalLine.Validate("Applies-to Doc. Type", TempPaymentRegistrationBuffer."Document Type");
-            GenJournalLine.Validate("Applies-to Doc. No.", TempPaymentRegistrationBuffer."Document No.");
-            GenJournalLine.Validate("External Document No.", TempPaymentRegistrationBuffer."External Document No.");
-            GenJournalLine.Validate(Description, CopyStr(
-                StrSubstNo('Prepayment, %1 %2.', TempPaymentRegistrationBuffer."Document Type", TempPaymentRegistrationBuffer."Document No."),
-                1, MaxStrLen(GenJournalLine."Description")
-            ));
-            GenJournalLine.Insert(true);
-        until TempPaymentRegistrationBuffer.Next() = 0;
-
-        CODEUNIT.Run(CODEUNIT::"Gen. Jnl.-Post Batch", GenJournalLine);
-    end;
-
-    local procedure UpdatePmtDiscountDateOnCustLedgerEntry(TempPaymentRegistrationBuffer: Record "Payment Registration Buffer" temporary)
-    var
-        CustLedgerEntry: Record "Cust. Ledger Entry";
-    begin
-        CustLedgerEntry.LockTable();
-        CustLedgerEntry.Get(TempPaymentRegistrationBuffer."Ledger Entry No.");
-        if CustLedgerEntry."Pmt. Discount Date" <> TempPaymentRegistrationBuffer."Pmt. Discount Date" then begin
-            CustLedgerEntry."Pmt. Discount Date" := TempPaymentRegistrationBuffer."Pmt. Discount Date";
-            CODEUNIT.Run(CODEUNIT::"Cust. Entry-Edit", CustLedgerEntry);
-        end;
-    end;
-
-    local procedure CheckCurrencyCode(var TempPaymentRegistrationBuffer: Record "Payment Registration Buffer" temporary; GenJnlLine: Record "Gen. Journal Line"; PaymentRegistrationSetup: Record "Payment Registration Setup")
-    var
-        CustLedgerEntry: Record "Cust. Ledger Entry";
-        ForeignCurrNotSuportedErr: Label 'The document with type %1 and description %2 must have the same currency code as the payment you are registering.';
-    begin
-        CustLedgerEntry.SetRange("Entry No.", TempPaymentRegistrationBuffer."Ledger Entry No.");
-        CustLedgerEntry.SetFilter("Currency Code", '<>%1', GenJnlLine."Currency Code");
-        if not CustLedgerEntry.IsEmpty() then
-            Error(ForeignCurrNotSuportedErr, TempPaymentRegistrationBuffer."Document Type", TempPaymentRegistrationBuffer.Description);
     end;
 }
