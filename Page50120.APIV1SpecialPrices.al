@@ -43,18 +43,22 @@ page 50120 SpecialPrices
             {
                 ApplicationArea = All;
             }
+#if BUILD_REGION_AUNZ
             field(publishedPrice; "Published Price")
             {
                 ApplicationArea = All;
             }
+#endif
             field(unitPrice; "Unit Price")
             {
                 ApplicationArea = All;
             }
+#if BUILD_REGION_AUNZ
             field(costPrice; Cost)
             {
                 ApplicationArea = All;
             }
+#endif
             field(unitofMeasureCode; "Unit of Measure Code")
             {
                 ApplicationArea = All;
@@ -75,6 +79,7 @@ page 50120 SpecialPrices
             {
                 ApplicationArea = All;
             }
+#if BUILD_REGION_AUNZ
             field(discountAmount; "Discount Amount")
             {
                 ApplicationArea = All;
@@ -83,6 +88,7 @@ page 50120 SpecialPrices
             {
                 ApplicationArea = All;
             }
+#endif
             field(variantCode; "Variant Code")
             {
                 ApplicationArea = All;

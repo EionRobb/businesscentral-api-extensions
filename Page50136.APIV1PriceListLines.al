@@ -54,11 +54,13 @@ page 50136 "Price List Lines Entity"
             field("AssignToParentNo"; "Assign-to Parent No.") { ApplicationArea = All; }
             //field("Variant Code Lookup"; "Variant Code Lookup"){ApplicationArea = All;}
             //field("Unit of Measure Code Lookup"; "Unit of Measure Code Lookup"){ApplicationArea = All;}
+#if BUILD_REGION_AUNZ
             field("PublishedPrice"; "Published Price") { ApplicationArea = All; }
             field("Cost"; "Cost") { ApplicationArea = All; }
             field("CostPlusPercent"; "Cost-plus %") { ApplicationArea = All; }
             field("DiscountAmount"; "Discount Amount") { ApplicationArea = All; }
-            field("SystemId"; "SystemId") { ApplicationArea = All; }
+#endif
+            field(id; "SystemId") { ApplicationArea = All; }
             //field("SystemCreatedAt"; "SystemCreatedAt"){ApplicationArea = All;}
             //field("SystemCreatedBy"; "SystemCreatedBy"){ApplicationArea = All;}
             //field("SystemModifiedAt"; "SystemModifiedAt"){ApplicationArea = All;}

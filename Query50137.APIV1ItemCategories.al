@@ -17,7 +17,6 @@ query 50137 ItemCategories
             column(displayName; "Description") { }
             column(parentCode; "Parent Category") { }
             column(lastModifiedDateTime; "Last Modified Date Time") { }
-
         }
     }
 }

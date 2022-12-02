@@ -20,7 +20,7 @@
       "to": 50149
     }
   ],
+  "preprocessorSymbols": ["BUILD_REGION_AUNZ"],
   "contextSensitiveHelpUrl": "http://help.opmetrix.com/",
-  "showMyCode": true,
-  "runtime": "3.0"
+  "showMyCode": true
 }
