@@ -40,6 +40,8 @@ page 50132 "Comments"
             {
                 ApplicationArea = All;
             }
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

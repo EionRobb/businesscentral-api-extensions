@@ -28,6 +28,8 @@ query 50129 "Item Dimensions Extension"
                     column(value; Name) { }
                 }
             }
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

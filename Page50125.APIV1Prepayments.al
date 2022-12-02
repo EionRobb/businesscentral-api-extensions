@@ -50,6 +50,8 @@ page 50125 "Prepayments"
                     Caption = 'AmountIncludingVAT', Locked = true;
                     Editable = false;
                 }
+                field(id; SystemId) { }
+                field(lastModifiedDateTime; SystemModifiedAt) { }
             }
         }
     }

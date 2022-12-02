@@ -13,7 +13,7 @@ query 50128 "Customer Dimensions Extension"
 
         dataitem(defaultDimensions; "Default Dimension")
         {
-            DataItemTableFilter = "Table ID" = const (18);
+            DataItemTableFilter = "Table ID" = const(18);
             column("customerNumber"; "No.") { }
             column("dimensionCode"; "Dimension Code") { }
             column("dimensionValueCode"; "Dimension Value Code") { }
@@ -28,6 +28,8 @@ query 50128 "Customer Dimensions Extension"
                     column(value; Name) { }
                 }
             }
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

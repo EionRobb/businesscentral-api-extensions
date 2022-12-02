@@ -38,6 +38,7 @@ page 50126 TaxRates
             }
 
 
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

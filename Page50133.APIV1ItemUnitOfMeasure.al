@@ -48,6 +48,8 @@ page 50133 "Item Unit Of Measure"
             {
                 ApplicationArea = All;
             }
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

@@ -23,6 +23,8 @@ query 50135 IncomingItems
             column(locationCode; "Location Code") { }
             column(unitOfMeasure; "Unit of Measure") { }
 
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

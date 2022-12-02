@@ -19,6 +19,8 @@ query 50136 ItemCrossReferences
             column("type"; "Cross-Reference Type") { }
             column("number"; "Cross-Reference No.") { }
 
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

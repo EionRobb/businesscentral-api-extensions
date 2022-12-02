@@ -33,6 +33,8 @@ page 50134 "Salesperson Entity"
             {
                 ApplicationArea = All;
             }
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
 
         }
     }

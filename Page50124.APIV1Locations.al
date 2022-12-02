@@ -38,6 +38,8 @@ page 50124 Locations
                 ApplicationArea = All;
             }
 
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }
