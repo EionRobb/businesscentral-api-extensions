@@ -53,6 +53,7 @@ page 50130 "Item Entity Extension"
             {
                 ApplicationArea = All;
             }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

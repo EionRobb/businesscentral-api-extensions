@@ -2,10 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Publish: Opmetrix cloud sandbox",
+            "name": "Publish: Opmetrix cloud NZ sandbox",
             "type": "al",
             "request": "launch",
             "environmentType": "Sandbox",
+            "environmentName": "Sandbox",
             "server": "https://businesscentral.dynamics.com/43e728f5-a0d9-484d-9971-db0137ca2c70/Sandbox",
             "serverInstance": "BC",
             /*"authentication": "UserPassword",*/
@@ -21,7 +22,7 @@
             "primaryTenantDomain": "opmetrix.onmicrosoft.com"
         },
         {
-            "name": "Attach: Opmetrix cloud sandbox",
+            "name": "Attach: Opmetrix cloud NZ sandbox",
             "type": "al",
             "request": "attach",
             "environmentType": "Sandbox",
@@ -30,6 +31,23 @@
             "breakOnError": true,
             "breakOnRecordWrite": false,
             "breakOnNext": "WebServiceClient",
+            "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            "longRunningSqlStatementsThreshold": 500,
+            "numberOfSqlStatements": 10,
+            "tenant": "43e728f5-a0d9-484d-9971-db0137ca2c70",
+            "primaryTenantDomain": "opmetrix.onmicrosoft.com"
+        },
+        {
+            "name": "Publish: Opmetrix cloud US sandbox",
+            "type": "al",
+            "request": "launch",
+            "environmentType": "Sandbox",
+            "environmentName": "USA_Sandbox",
+            "server": "https://businesscentral.dynamics.com/43e728f5-a0d9-484d-9971-db0137ca2c70/USA_Sandbox",
+            "serverInstance": "BC",
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
             "enableSqlInformationDebugger": true,
             "enableLongRunningSqlStatements": true,
             "longRunningSqlStatementsThreshold": 500,

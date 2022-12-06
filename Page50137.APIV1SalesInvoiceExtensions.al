@@ -26,6 +26,7 @@ page 50137 "Sales Invoice Extension"
                 EntitySetName = 'salesInvoiceLines';
                 SubPageLink = "Document Id" = FIELD(Id);
             }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

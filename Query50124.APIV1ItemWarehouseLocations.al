@@ -29,6 +29,8 @@ query 50124 ItemWarehouseLocations
                     }
                 }
             }
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 

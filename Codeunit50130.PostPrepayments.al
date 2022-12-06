@@ -671,7 +671,8 @@ codeunit 50130 "Post Prepayments"
                         SalesLine."VAT %" := 0;
                     if not VATAmountLine.Get(
                          SalesLine."Prepayment VAT Identifier", SalesLine."Prepmt. VAT Calc. Type", SalesLine."Prepayment Tax Group Code", false, NewAmount >= 0)
-                    then
+                    then begin
+#if BUILD_REGION_AUNZ
                         VATAmountLine.InsertNewLine(
                           SalesLine."Prepayment VAT Identifier",
                           SalesLine."Prepmt. VAT Calc. Type",
@@ -685,6 +686,8 @@ codeunit 50130 "Post Prepayments"
                            */
                           false
                         );
+#endif
+                    end;
 
                     VATAmountLine."Line Amount" := VATAmountLine."Line Amount" + NewAmount;
                     NewPrepmtVATDiffAmt := PrepmtVATDiffAmount(SalesLine, DocumentType);

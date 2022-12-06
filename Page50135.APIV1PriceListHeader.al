@@ -39,12 +39,20 @@ page 50135 "Price List Header Entity"
             //field("Allow Updating Defaults"; "Allow Updating Defaults") { ApplicationArea = All; }
             field("AssignToNo"; "Assign-to No.") { ApplicationArea = All; }
             field("AssignToParentNo"; "Assign-to Parent No.") { ApplicationArea = All; }
-            field("SystemId"; "SystemId") { ApplicationArea = All; }
+            field(id; "SystemId") { ApplicationArea = All; }
             //field("SystemCreatedAt"; "SystemCreatedAt") { ApplicationArea = All; }
             //field("SystemCreatedBy"; "SystemCreatedBy") { ApplicationArea = All; }
             //field("SystemModifiedAt"; "SystemModifiedAt") { ApplicationArea = All; }
             //field("SystemModifiedBy"; "SystemModifiedBy") { ApplicationArea = All; }
             //field("SystemRowVersion"; "SystemRowVersion") { ApplicationArea = All; }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
+
+            part(lines; 50136)
+            {
+                EntityName = 'priceListLine';
+                EntitySetName = 'priceListLines';
+                SubPageLink = "Price List Code" = FIELD("Code");
+            }
         }
     }
 }

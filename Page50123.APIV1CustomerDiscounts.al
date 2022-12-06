@@ -28,6 +28,8 @@ page 50123 "Customer Discount Extension"
             {
                 ApplicationArea = All;
             }
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }

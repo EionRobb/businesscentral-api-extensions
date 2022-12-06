@@ -29,6 +29,8 @@ query 50123 ItemLocations
                     }
                 }
             }
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 

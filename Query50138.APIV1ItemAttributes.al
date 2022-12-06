@@ -50,6 +50,8 @@ query 50138 "ItemAttributes"
                     }
                 }
             }
+            column(id; SystemId) { }
+            column(lastModifiedDateTime; SystemModifiedAt) { }
 
         }
     }

@@ -64,6 +64,8 @@ page 50122 SpecialDiscounts
                 ApplicationArea = All;
             }
 
+            field(id; SystemId) { }
+            field(lastModifiedDateTime; SystemModifiedAt) { }
         }
     }
 }
