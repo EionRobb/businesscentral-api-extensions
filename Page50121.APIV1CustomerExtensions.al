@@ -49,7 +49,10 @@ page 50121 "Customer Entity Extension"
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt) { }
+            field(lastModifiedDateTime; SystemModifiedAt)
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

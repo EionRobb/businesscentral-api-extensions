@@ -45,7 +45,10 @@ page 50135 "Price List Header Entity"
             //field("SystemModifiedAt"; "SystemModifiedAt") { ApplicationArea = All; }
             //field("SystemModifiedBy"; "SystemModifiedBy") { ApplicationArea = All; }
             //field("SystemRowVersion"; "SystemRowVersion") { ApplicationArea = All; }
-            field(lastModifiedDateTime; SystemModifiedAt) { }
+            field(lastModifiedDateTime; SystemModifiedAt)
+            {
+                ApplicationArea = All;
+            }
 
             part(lines; 50136)
             {

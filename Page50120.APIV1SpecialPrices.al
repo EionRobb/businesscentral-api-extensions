@@ -93,8 +93,14 @@ page 50120 SpecialPrices
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId) { }
-            field(lastModifiedDateTime; SystemModifiedAt) { }
+            field(id; SystemId)
+            {
+                ApplicationArea = All;
+            }
+            field(lastModifiedDateTime; SystemModifiedAt)
+            {
+                ApplicationArea = All;
+            }
 
         }
     }

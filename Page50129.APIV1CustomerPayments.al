@@ -24,8 +24,12 @@ page 50129 "CustomerPayments"
                 {
                     Caption = 'id', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; SystemModifiedAt) { }
+                field(lastModifiedDateTime; SystemModifiedAt)
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

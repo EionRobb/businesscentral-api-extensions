@@ -31,7 +31,10 @@ page 50138 "Sales Invoice Line Extension"
                 {
                     ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; SystemModifiedAt) { }
+                field(lastModifiedDateTime; SystemModifiedAt)
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

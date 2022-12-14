@@ -24,34 +24,46 @@ page 50125 "Prepayments"
                 {
                     Caption = 'SalesOrderId', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field(SalesOrderNumber; "No.")
                 {
                     Caption = 'SalesOrderNumber', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field(PrepaymentInvoiceNumber; "Last Prepayment No.")
                 {
                     Caption = 'PrepaymentInvoiceNumber', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field(CustomerNumber; "Bill-to Customer No.")
                 {
                     Caption = 'CustomerNumber', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field(ExternalDocumentNumber; "External Document No.")
                 {
                     Caption = 'ExternalDocumentNumber', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field(AmountIncludingVAT; "Amount Including VAT")
                 {
                     Caption = 'AmountIncludingVAT', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
-                field(id; SystemId) { }
-                field(lastModifiedDateTime; SystemModifiedAt) { }
+                field(id; SystemId)
+                {
+                    ApplicationArea = All;
+                }
+                field(lastModifiedDateTime; SystemModifiedAt)
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

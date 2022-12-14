@@ -38,7 +38,10 @@ page 50126 TaxRates
             }
 
 
-            field(lastModifiedDateTime; SystemModifiedAt) { }
+            field(lastModifiedDateTime; SystemModifiedAt)
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

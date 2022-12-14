@@ -66,7 +66,10 @@ page 50136 "Price List Lines Entity"
             //field("SystemModifiedAt"; "SystemModifiedAt"){ApplicationArea = All;}
             //field("SystemModifiedBy"; "SystemModifiedBy"){ApplicationArea = All;}
             //field("SystemRowVersion"; "SystemRowVersion"){ApplicationArea = All;}
-            field(lastModifiedDateTime; SystemModifiedAt) { }
+            field(lastModifiedDateTime; SystemModifiedAt)
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

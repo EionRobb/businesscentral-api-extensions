@@ -21,28 +21,34 @@ page 50128 "APIV1 - Cust. Paym. Journals"
                 {
                     Caption = 'id', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
                 field("code"; Name)
                 {
                     Caption = 'code', Locked = true;
                     ShowMandatory = true;
+                    ApplicationArea = All;
                 }
                 field(displayName; Description)
                 {
                     Caption = 'displayName', Locked = true;
+                    ApplicationArea = All;
                 }
                 field(lastModifiedDateTime; "Last Modified DateTime")
                 {
                     Caption = 'lastModifiedDateTime', Locked = true;
+                    ApplicationArea = All;
                 }
                 field(balancingAccountId; BalAccountId)
                 {
                     Caption = 'balancingAccountId', Locked = true;
+                    ApplicationArea = All;
                 }
                 field(balancingAccountNumber; "Bal. Account No.")
                 {
                     Caption = 'balancingAccountNumber', Locked = true;
                     Editable = false;
+                    ApplicationArea = All;
                 }
             }
         }
