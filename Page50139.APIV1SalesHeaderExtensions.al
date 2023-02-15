@@ -11,25 +11,52 @@ page 50139 "Sales Header Extension"
 
     SourceTable = "Sales Header";
     //SourceTable = 36;
-    ODataKeyFields = "Id";
+    ODataKeyFields = SystemId;
 
     layout
     {
         area(Content)
         {
-            field("id"; "Id") { ApplicationArea = All; }
+            field("id"; "SystemId") { ApplicationArea = All; }
             field("number"; "No.") { ApplicationArea = All; }
 
             field(externalDocumentNumber; "External Document No.") { ApplicationArea = All; }
 
             field(yourReference; "Your Reference") { ApplicationArea = All; }
             field(postingDescription; "Posting Description") { ApplicationArea = All; }
+            field(status; "Status")
+            {
+                ApplicationArea = All;
+                Editable = False;
+            }
             field(lastModifiedDateTime; SystemModifiedAt)
             {
                 ApplicationArea = All;
+                Editable = False;
             }
+            /*part(salesOrder; "APIV1 - Sales Orders")
+            {
+                EntityName = 'salesOrder';
+                EntitySetName = 'salesOrders';
+                SubPageLink = "Document Id" = FIELD(SystemId);
+            }*/
+            /*part(salesOrder; "APIV1 - Sales Order Lines")
+            {
+                EntityName = 'salesOrderLine';
+                EntitySetName = 'salesOrderLines';
+                SubPageLink = "Document Id" = FIELD(SystemId);
+            }*/
         }
     }
+
+    trigger OnModifyRecord(): Boolean
+    begin
+        IF xRec.SystemId <> Rec.SystemId THEN
+            ERROR('The id cannot be changed.');
+        IF xRec."No." <> Rec."No." THEN
+            ERROR('The number cannot be changed.');
+
+    end;
 
     [ServiceEnabled]
     procedure Release(var actionContext: WebServiceActionContext)
@@ -37,6 +64,11 @@ page 50139 "Sales Header Extension"
         ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
         ReleaseSalesDocument.PerformManualRelease(Rec);
+
+        actionContext.SetObjectType(ObjectType::Page);
+        actionContext.SetObjectId(Page::"Sales Header Extension");
+        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
+        actionContext.SetResultCode(WebServiceActionResultCode::Updated);
     end;
 
     [ServiceEnabled]
@@ -45,6 +77,11 @@ page 50139 "Sales Header Extension"
         ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
         ReleaseSalesDocument.PerformManualCheckAndRelease(Rec);
+
+        actionContext.SetObjectType(ObjectType::Page);
+        actionContext.SetObjectId(Page::"Sales Header Extension");
+        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
+        actionContext.SetResultCode(WebServiceActionResultCode::Updated);
     end;
 
     [ServiceEnabled]
@@ -53,6 +90,11 @@ page 50139 "Sales Header Extension"
         ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
         ReleaseSalesDocument.PerformManualReopen(Rec);
+
+        actionContext.SetObjectType(ObjectType::Page);
+        actionContext.SetObjectId(Page::"Sales Header Extension");
+        actionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
+        actionContext.SetResultCode(WebServiceActionResultCode::Updated);
     end;
 
 }
