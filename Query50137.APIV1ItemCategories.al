@@ -12,7 +12,7 @@ query 50137 ItemCategories
     {
         dataitem(itemCategories; "Item Category")
         {
-            column(id; Id) { }
+            column(id; SystemID) { }
             column(code; Code) { }
             column(displayName; "Description") { }
             column(parentCode; "Parent Category") { }

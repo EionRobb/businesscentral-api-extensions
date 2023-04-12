@@ -7,7 +7,7 @@ page 50138 "Sales Invoice Line Extension"
     //SourceTable = 5476;
     SourceTable = "Sales Invoice Line Aggregate";
     SourceTableTemporary = true;
-    ODataKeyFields = "Id";
+    ODataKeyFields = "SystemID";
 
     layout
     {
@@ -15,15 +15,15 @@ page 50138 "Sales Invoice Line Extension"
         {
             repeater(Group)
             {
-                field(id; Id)
+                field(id; Rec.SystemID)
                 {
                     ApplicationArea = All;
                 }
-                field(documentId; "Document Id")
+                field(documentId; Rec."Document Id")
                 {
                     ApplicationArea = All;
                 }
-                field(sequence; "Line No.")
+                field(sequence; Rec."Line No.")
                 {
                     ApplicationArea = All;
                 }
@@ -31,7 +31,7 @@ page 50138 "Sales Invoice Line Extension"
                 {
                     ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; SystemModifiedAt)
+                field(lastModifiedDateTime; Rec.SystemModifiedAt)
                 {
                     ApplicationArea = All;
                 }
@@ -70,18 +70,18 @@ page 50138 "Sales Invoice Line Extension"
         IDOrDocumentIdShouldBeSpecifiedForLinesErr: Label 'You must specify an Id or a Document Id to get the lines.', Locked = true;
     begin
         IF NOT LinesLoaded THEN BEGIN
-            FilterView := GETVIEW();
-            IdFilter := GETFILTER(Id);
-            DocumentIdFilter := GETFILTER("Document Id");
+            FilterView := Rec.GETVIEW();
+            IdFilter := Rec.GETFILTER(Id);
+            DocumentIdFilter := Rec.GETFILTER("Document Id");
             IF (IdFilter = '') AND (DocumentIdFilter = '') THEN
                 ERROR(IDOrDocumentIdShouldBeSpecifiedForLinesErr);
             IF IdFilter <> '' THEN
                 DocumentIdFilter := GraphMgtSalesInvLines.GetDocumentIdFilterFromIdFilter(IdFilter)
             ELSE
-                DocumentIdFilter := GETFILTER("Document Id");
+                DocumentIdFilter := Rec.GETFILTER("Document Id");
             SalesInvoiceAggregator.LoadLines(Rec, DocumentIdFilter);
-            SETVIEW(FilterView);
-            IF NOT FINDFIRST() THEN
+            Rec.SETVIEW(FilterView);
+            IF NOT Rec.FINDFIRST() THEN
                 EXIT(FALSE);
             LinesLoaded := TRUE;
         END;

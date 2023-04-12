@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50135 "Price List Header Entity"
 {
     PageType = API;
@@ -17,35 +18,35 @@ page 50135 "Price List Header Entity"
     {
         area(Content)
         {
-            field("Code"; "Code") { ApplicationArea = All; }
-            field("Description"; "Description") { ApplicationArea = All; }
-            field("SourceGroup"; "Source Group") { ApplicationArea = All; }
-            field("SourceType"; "Source Type") { ApplicationArea = All; }
-            field("SourceNo"; "Source No.") { ApplicationArea = All; }
-            field("ParentSourceNo"; "Parent Source No.") { ApplicationArea = All; }
-            field("SourceID"; "Source ID") { ApplicationArea = All; }
-            field("PriceType"; "Price Type") { ApplicationArea = All; }
-            field("AmountType"; "Amount Type") { ApplicationArea = All; }
-            field("CurrencyCode"; "Currency Code") { ApplicationArea = All; }
-            field("StartingDate"; "Starting Date") { ApplicationArea = All; }
-            field("EndingDate"; "Ending Date") { ApplicationArea = All; }
-            field("PriceIncludesVAT"; "Price Includes VAT") { ApplicationArea = All; }
+            field("Code"; Rec."Code") { ApplicationArea = All; }
+            field("Description"; Rec."Description") { ApplicationArea = All; }
+            field("SourceGroup"; Rec."Source Group") { ApplicationArea = All; }
+            field("SourceType"; Rec."Source Type") { ApplicationArea = All; }
+            field("SourceNo"; Rec."Source No.") { ApplicationArea = All; }
+            field("ParentSourceNo"; Rec."Parent Source No.") { ApplicationArea = All; }
+            field("SourceID"; Rec."Source ID") { ApplicationArea = All; }
+            field("PriceType"; Rec."Price Type") { ApplicationArea = All; }
+            field("AmountType"; Rec."Amount Type") { ApplicationArea = All; }
+            field("CurrencyCode"; Rec."Currency Code") { ApplicationArea = All; }
+            field("StartingDate"; Rec."Starting Date") { ApplicationArea = All; }
+            field("EndingDate"; Rec."Ending Date") { ApplicationArea = All; }
+            field("PriceIncludesVAT"; Rec."Price Includes VAT") { ApplicationArea = All; }
             //field("VAT Bus. Posting Gr. (Price)"; "VAT Bus. Posting Gr. (Price)") { ApplicationArea = All; }
-            field("AllowLineDiscount"; "Allow Line Disc.") { ApplicationArea = All; }
-            field("AllowInvoiceDisccount"; "Allow Invoice Disc.") { ApplicationArea = All; }
+            field("AllowLineDiscount"; Rec."Allow Line Disc.") { ApplicationArea = All; }
+            field("AllowInvoiceDisccount"; Rec."Allow Invoice Disc.") { ApplicationArea = All; }
             //field("No. Series"; "No. Series") { ApplicationArea = All; }
-            field("Status"; "Status") { ApplicationArea = All; }
+            field("Status"; Rec."Status") { ApplicationArea = All; }
             //field("Filter Source No."; "Filter Source No.") { ApplicationArea = All; }
             //field("Allow Updating Defaults"; "Allow Updating Defaults") { ApplicationArea = All; }
-            field("AssignToNo"; "Assign-to No.") { ApplicationArea = All; }
-            field("AssignToParentNo"; "Assign-to Parent No.") { ApplicationArea = All; }
-            field(id; "SystemId") { ApplicationArea = All; }
+            field("AssignToNo"; Rec."Assign-to No.") { ApplicationArea = All; }
+            field("AssignToParentNo"; Rec."Assign-to Parent No.") { ApplicationArea = All; }
+            field(id; Rec."SystemId") { ApplicationArea = All; }
             //field("SystemCreatedAt"; "SystemCreatedAt") { ApplicationArea = All; }
             //field("SystemCreatedBy"; "SystemCreatedBy") { ApplicationArea = All; }
             //field("SystemModifiedAt"; "SystemModifiedAt") { ApplicationArea = All; }
             //field("SystemModifiedBy"; "SystemModifiedBy") { ApplicationArea = All; }
             //field("SystemRowVersion"; "SystemRowVersion") { ApplicationArea = All; }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
@@ -59,3 +60,4 @@ page 50135 "Price List Header Entity"
         }
     }
 }
+#pragma implicitwith restore

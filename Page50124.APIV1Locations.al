@@ -17,32 +17,32 @@ page 50124 Locations
     {
         area(Content)
         {
-            field(code; Code)
+            field(code; Rec.Code)
             {
                 ApplicationArea = All;
             }
-            field(name; Name)
+            field(name; Rec.Name)
             {
                 ApplicationArea = All;
             }
-            field(name2; "Name 2")
+            field(name2; Rec."Name 2")
             {
                 ApplicationArea = All;
             }
-            field(address; Address)
+            field(address; Rec.Address)
             {
                 ApplicationArea = All;
             }
-            field(address2; "Address 2")
+            field(address2; Rec."Address 2")
             {
                 ApplicationArea = All;
             }
 
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

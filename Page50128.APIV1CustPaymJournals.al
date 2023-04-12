@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50128 "APIV1 - Cust. Paym. Journals"
 {
     APIPublisher = 'Opmetrix';
@@ -17,34 +18,34 @@ page 50128 "APIV1 - Cust. Paym. Journals"
         {
             repeater(Group)
             {
-                field(id; SystemId)
+                field(id; Rec.SystemId)
                 {
                     Caption = 'id', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field("code"; Name)
+                field("code"; Rec.Name)
                 {
                     Caption = 'code', Locked = true;
                     ShowMandatory = true;
                     ApplicationArea = All;
                 }
-                field(displayName; Description)
+                field(displayName; Rec.Description)
                 {
                     Caption = 'displayName', Locked = true;
                     ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; "Last Modified DateTime")
+                field(lastModifiedDateTime; Rec."Last Modified DateTime")
                 {
                     Caption = 'lastModifiedDateTime', Locked = true;
                     ApplicationArea = All;
                 }
-                field(balancingAccountId; BalAccountId)
+                field(balancingAccountId; Rec.BalAccountId)
                 {
                     Caption = 'balancingAccountId', Locked = true;
                     ApplicationArea = All;
                 }
-                field(balancingAccountNumber; "Bal. Account No.")
+                field(balancingAccountNumber; Rec."Bal. Account No.")
                 {
                     Caption = 'balancingAccountNumber', Locked = true;
                     Editable = false;
@@ -60,12 +61,12 @@ page 50128 "APIV1 - Cust. Paym. Journals"
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        "Journal Template Name" := GraphMgtJournal.GetDefaultCustomerPaymentsTemplateName();
+        Rec."Journal Template Name" := GraphMgtJournal.GetDefaultCustomerPaymentsTemplateName();
     end;
 
     trigger OnOpenPage()
     begin
-        SETRANGE("Journal Template Name", GraphMgtJournal.GetDefaultCustomerPaymentsTemplateName());
+        Rec.SETRANGE("Journal Template Name", GraphMgtJournal.GetDefaultCustomerPaymentsTemplateName());
     end;
 
     [ServiceEnabled]
@@ -75,7 +76,7 @@ page 50128 "APIV1 - Cust. Paym. Journals"
     begin
         GetBatch(GenJournalBatch);
         PostBatch(GenJournalBatch);
-        SetActionResponse(ActionContext, SystemId);
+        SetActionResponse(ActionContext, Rec.SystemId);
     end;
 
     local procedure PostBatch(var GenJournalBatch: Record "Gen. Journal Batch")
@@ -93,9 +94,9 @@ page 50128 "APIV1 - Cust. Paym. Journals"
     local procedure GetBatch(var GenJournalBatch: Record "Gen. Journal Batch")
     begin
         //if not GenJournalBatch.GetBySystemId(SystemId) then //TODO needs newer API version
-        GenJournalBatch.SETRANGE(SystemId, SystemId);
+        GenJournalBatch.SETRANGE(SystemId, Rec.SystemId);
         IF NOT GenJournalBatch.FINDFIRST() THEN
-            Error(CannotFindBatchErr, SystemId);
+            Error(CannotFindBatchErr, Rec.SystemId);
     end;
 
     local procedure SetActionResponse(var ActionContext: WebServiceActionContext; GenJournalBatchId: Guid)
@@ -104,7 +105,7 @@ page 50128 "APIV1 - Cust. Paym. Journals"
 
         ActionContext.SetObjectType(ObjectType::Page);
         ActionContext.SetObjectId(Page::"APIV1 - Cust. Paym. Journals");
-        ActionContext.AddEntityKey(FieldNo(SystemId), GenJournalBatchId);
+        ActionContext.AddEntityKey(Rec.FieldNo(SystemId), GenJournalBatchId);
         ActionContext.SetResultCode(WebServiceActionResultCode::Deleted);
     end;
 
@@ -113,5 +114,7 @@ page 50128 "APIV1 - Cust. Paym. Journals"
         ThereIsNothingToPostErr: Label 'There is nothing to post.';
         CannotFindBatchErr: Label 'The General Journal Batch with ID %1 cannot be found.', Comment = '%1 - the System ID of the general journal batch';
 }
+
+#pragma implicitwith restore
 
 

@@ -16,35 +16,35 @@ page 50132 "Comments"
     {
         area(Content)
         {
-            field(tableName; "Table Name")
+            field(tableName; Rec."Table Name")
             {
                 ApplicationArea = All;
             }
-            field(number; "No.")
+            field(number; Rec."No.")
             {
                 ApplicationArea = All;
             }
-            field(lineNumber; "Line No.")
+            field(lineNumber; Rec."Line No.")
             {
                 ApplicationArea = All;
             }
-            field(date; Date)
+            field(date; Rec.Date)
             {
                 ApplicationArea = All;
             }
-            field(code; Code)
+            field(code; Rec.Code)
             {
                 ApplicationArea = All;
             }
-            field(comment; Comment)
+            field(comment; Rec.Comment)
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

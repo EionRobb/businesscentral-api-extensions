@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50130 "Item Entity Extension"
 {
     PageType = API;
@@ -11,52 +12,53 @@ page 50130 "Item Entity Extension"
 
     SourceTable = "Item";
     //SourceTable = 27;
-    ODataKeyFields = Id;
+    ODataKeyFields = SystemId;
 
     layout
     {
         area(Content)
         {
-            field("ID"; ID)
+            field("ID"; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field("itemNumber"; "No.")
+            field("itemNumber"; Rec."No.")
             {
                 ApplicationArea = All;
             }
-            field("generalProductPostingGroupCode"; "Gen. Prod. Posting Group")
+            field("generalProductPostingGroupCode"; Rec."Gen. Prod. Posting Group")
             {
                 ApplicationArea = All;
             }
-            field("taxProductPostingGroupCode"; "VAT Prod. Posting Group")
+            field("taxProductPostingGroupCode"; Rec."VAT Prod. Posting Group")
             {
                 ApplicationArea = All;
             }
-            field("discountGroup"; "Item Disc. Group")
+            field("discountGroup"; Rec."Item Disc. Group")
             {
                 ApplicationArea = All;
             }
-            field("allowInvoiceDiscount"; "Allow Invoice Disc.")
+            field("allowInvoiceDiscount"; Rec."Allow Invoice Disc.")
             {
                 ApplicationArea = All;
             }
-            field("salesUnitOfMeasureCode"; "Sales Unit of Measure")
+            field("salesUnitOfMeasureCode"; Rec."Sales Unit of Measure")
             {
                 ApplicationArea = All;
             }
-            field("purchaseUnitOfMeasureCode"; "Purch. Unit of Measure")
+            field("purchaseUnitOfMeasureCode"; Rec."Purch. Unit of Measure")
             {
                 ApplicationArea = All;
             }
-            field("salesBlocked"; "Sales Blocked")
+            field("salesBlocked"; Rec."Sales Blocked")
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
         }
     }
 }
+#pragma implicitwith restore

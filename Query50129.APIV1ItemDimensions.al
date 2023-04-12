@@ -19,12 +19,12 @@ query 50129 "Item Dimensions Extension"
             column("dimensionValueCode"; "Dimension Value Code") { }
             dataitem(dimensions; "Dimension")
             {
-                DataItemLink = ID = defaultDimensions.DimensionId;
+                DataItemLink = SystemID = defaultDimensions.DimensionId;
                 column(name; Name) { }
 
                 dataitem(dimensionValues; "Dimension Value")
                 {
-                    DataItemLink = ID = defaultDimensions.DimensionValueId;
+                    DataItemLink = SystemID = defaultDimensions.DimensionValueId;
                     column(value; Name) { }
                 }
             }

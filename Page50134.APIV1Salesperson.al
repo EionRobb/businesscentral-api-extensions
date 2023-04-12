@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50134 "Salesperson Entity"
 {
     PageType = API;
@@ -17,27 +18,27 @@ page 50134 "Salesperson Entity"
     {
         area(Content)
         {
-            field("code"; Code)
+            field("code"; Rec.Code)
             {
                 ApplicationArea = All;
             }
-            field("name"; Name)
+            field("name"; Rec.Name)
             {
                 ApplicationArea = All;
             }
-            field("commissionPercent"; "Commission %")
+            field("commissionPercent"; Rec."Commission %")
             {
                 ApplicationArea = All;
             }
-            field("email"; "E-Mail")
+            field("email"; Rec."E-Mail")
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
@@ -45,3 +46,4 @@ page 50134 "Salesperson Entity"
         }
     }
 }
+#pragma implicitwith restore

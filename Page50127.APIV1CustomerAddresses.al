@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50127 "Customer Addresses"
 {
     PageType = API;
@@ -17,54 +18,55 @@ page 50127 "Customer Addresses"
         area(Content)
         {
 
-            field("customerNumber"; "Customer No.")
+            field("customerNumber"; Rec."Customer No.")
             {
                 ApplicationArea = All;
             }
-            field("code"; Code)
+            field("code"; Rec.Code)
             {
                 ApplicationArea = All;
             }
-            field("name"; Name)
+            field("name"; Rec.Name)
             {
                 ApplicationArea = All;
             }
-            field("address"; Address)
+            field("address"; Rec.Address)
             {
                 ApplicationArea = All;
             }
-            field("name2"; "Name 2")
+            field("name2"; Rec."Name 2")
             {
                 ApplicationArea = All;
             }
-            field("address2"; "Address 2")
+            field("address2"; Rec."Address 2")
             {
                 ApplicationArea = All;
             }
-            field("city"; City)
+            field("city"; Rec.City)
             {
                 ApplicationArea = All;
             }
-            field("postcode"; "Post Code")
+            field("postcode"; Rec."Post Code")
             {
                 ApplicationArea = All;
             }
-            field("county"; "County")
+            field("county"; Rec."County")
             {
                 ApplicationArea = All;
             }
-            field("regionCode"; "Country/Region Code")
+            field("regionCode"; Rec."Country/Region Code")
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
         }
     }
 }
+#pragma implicitwith restore

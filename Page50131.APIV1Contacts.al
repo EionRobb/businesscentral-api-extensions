@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50131 "Contacts"
 {
     PageType = API;
@@ -16,74 +17,75 @@ page 50131 "Contacts"
     {
         area(Content)
         {
-            field("number"; "No.")
+            field("number"; Rec."No.")
             {
                 ApplicationArea = All;
             }
-            field(type; Type)
+            field(type; Rec.Type)
             {
                 ApplicationArea = All;
             }
-            field("customerNumber"; "Company No.")
+            field("customerNumber"; Rec."Company No.")
             {
                 ApplicationArea = All;
             }
-            field("name"; Name)
+            field("name"; Rec.Name)
             {
                 ApplicationArea = All;
             }
-            field("firstName"; "First Name")
+            field("firstName"; Rec."First Name")
             {
                 ApplicationArea = All;
             }
-            field("surname"; Surname)
+            field("surname"; Rec.Surname)
             {
                 ApplicationArea = All;
             }
-            field("email"; "E-Mail")
+            field("email"; Rec."E-Mail")
             {
                 ApplicationArea = All;
             }
-            field("lastDateModified"; "Last Date Modified")
+            field("lastDateModified"; Rec."Last Date Modified")
             {
                 ApplicationArea = All;
             }
-            field("lastTimeModified"; "Last Time Modified")
+            field("lastTimeModified"; Rec."Last Time Modified")
             {
                 ApplicationArea = All;
             }
-            field("salespersonCode"; "Salesperson Code")
+            field("salespersonCode"; Rec."Salesperson Code")
             {
                 ApplicationArea = All;
             }
-            field("phoneNumber"; "Phone No.")
+            field("phoneNumber"; Rec."Phone No.")
             {
                 ApplicationArea = All;
             }
-            field("mobilePhoneNumber"; "Mobile Phone No.")
+            field("mobilePhoneNumber"; Rec."Mobile Phone No.")
             {
                 ApplicationArea = All;
             }
-            field("faxNumber"; "Fax No.")
+            field("faxNumber"; Rec."Fax No.")
             {
                 ApplicationArea = All;
             }
-            field("jobTitle"; "Job Title")
+            field("jobTitle"; Rec."Job Title")
             {
                 ApplicationArea = All;
             }
-            field("territoryCode"; "Territory Code")
+            field("territoryCode"; Rec."Territory Code")
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
         }
     }
 }
+#pragma implicitwith restore

@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50120 SpecialPrices
 {
     PageType = API;
@@ -16,88 +17,88 @@ page 50120 SpecialPrices
     {
         area(Content)
         {
-            field(itemNumber; "Item No.")
+            field(itemNumber; Rec."Item No.")
             {
                 Caption = 'Item Number';
                 ApplicationArea = All;
             }
-            field(salesType; "Sales Type")
+            field(salesType; Rec."Sales Type")
             {
                 Caption = 'Sales Type';
                 ApplicationArea = All;
             }
-            field(salesCode; "Sales Code")
+            field(salesCode; Rec."Sales Code")
             {
                 Caption = 'Sales Code';
                 ApplicationArea = All;
             }
-            field(startingDate; "Starting Date")
+            field(startingDate; Rec."Starting Date")
             {
                 ApplicationArea = All;
             }
-            field(endingDate; "Ending Date")
+            field(endingDate; Rec."Ending Date")
             {
                 ApplicationArea = All;
             }
-            field(currencyCode; "Currency Code")
-            {
-                ApplicationArea = All;
-            }
-#if BUILD_REGION_AUNZ
-            field(publishedPrice; "Published Price")
-            {
-                ApplicationArea = All;
-            }
-#endif
-            field(unitPrice; "Unit Price")
+            field(currencyCode; Rec."Currency Code")
             {
                 ApplicationArea = All;
             }
 #if BUILD_REGION_AUNZ
-            field(costPrice; Cost)
+            field(publishedPrice; Rec."Published Price")
             {
                 ApplicationArea = All;
             }
 #endif
-            field(unitofMeasureCode; "Unit of Measure Code")
-            {
-                ApplicationArea = All;
-            }
-            field(priceIncludesTax; "Price Includes VAT")
-            {
-                ApplicationArea = All;
-            }
-            field(allowInvoiceDiscount; "Allow Invoice Disc.")
-            {
-                ApplicationArea = All;
-            }
-            field(allowLineDiscount; "Allow Line Disc.")
-            {
-                ApplicationArea = All;
-            }
-            field(minimumQuantity; "Minimum Quantity")
+            field(unitPrice; Rec."Unit Price")
             {
                 ApplicationArea = All;
             }
 #if BUILD_REGION_AUNZ
-            field(discountAmount; "Discount Amount")
-            {
-                ApplicationArea = All;
-            }
-            field(costPlusPercentage; "Cost-plus %")
+            field(costPrice; Rec.Cost)
             {
                 ApplicationArea = All;
             }
 #endif
-            field(variantCode; "Variant Code")
+            field(unitofMeasureCode; Rec."Unit of Measure Code")
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(priceIncludesTax; Rec."Price Includes VAT")
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(allowInvoiceDiscount; Rec."Allow Invoice Disc.")
+            {
+                ApplicationArea = All;
+            }
+            field(allowLineDiscount; Rec."Allow Line Disc.")
+            {
+                ApplicationArea = All;
+            }
+            field(minimumQuantity; Rec."Minimum Quantity")
+            {
+                ApplicationArea = All;
+            }
+#if BUILD_REGION_AUNZ
+            field(discountAmount; Rec."Discount Amount")
+            {
+                ApplicationArea = All;
+            }
+            field(costPlusPercentage; Rec."Cost-plus %")
+            {
+                ApplicationArea = All;
+            }
+#endif
+            field(variantCode; Rec."Variant Code")
+            {
+                ApplicationArea = All;
+            }
+            field(id; Rec.SystemId)
+            {
+                ApplicationArea = All;
+            }
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
@@ -105,3 +106,4 @@ page 50120 SpecialPrices
         }
     }
 }
+#pragma implicitwith restore

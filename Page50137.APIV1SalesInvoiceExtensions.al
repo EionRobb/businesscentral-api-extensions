@@ -17,8 +17,8 @@ page 50137 "Sales Invoice Extension"
     {
         area(Content)
         {
-            field("id"; "Id") { ApplicationArea = All; }
-            field("number"; "No.") { ApplicationArea = All; }
+            field("id"; Rec."Id") { ApplicationArea = All; }
+            field("number"; Rec."No.") { ApplicationArea = All; }
             part(salesInvoiceLines; "Sales Invoice Line Extension")
             {
                 Caption = 'Lines', Locked = true;
@@ -26,7 +26,7 @@ page 50137 "Sales Invoice Extension"
                 EntitySetName = 'salesInvoiceLines';
                 SubPageLink = "Document Id" = FIELD(Id);
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

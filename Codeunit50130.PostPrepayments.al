@@ -2,7 +2,7 @@
 codeunit 50130 "Post Prepayments"
 {
     Permissions = TableData "Sales Line" = imd,
-                  TableData "Invoice Post. Buffer" = imd,
+                  TableData "Invoice Posting Buffer" = imd,
                   TableData "Sales Invoice Header" = imd,
                   TableData "Sales Invoice Line" = imd,
                   TableData "Sales Cr.Memo Header" = imd,

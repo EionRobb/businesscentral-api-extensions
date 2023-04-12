@@ -11,45 +11,45 @@ page 50121 "Customer Entity Extension"
 
     SourceTable = "Customer";
     //SourceTable = 18;
-    ODataKeyFields = Id;
+    ODataKeyFields = SystemId;
 
     layout
     {
         area(Content)
         {
-            field("ID"; ID)
+            field("ID"; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field("customerNumber"; "No.")
+            field("customerNumber"; Rec."No.")
             {
                 ApplicationArea = All;
             }
-            field("customerDiscountGroup"; "Customer Disc. Group")
+            field("customerDiscountGroup"; Rec."Customer Disc. Group")
             {
                 ApplicationArea = All;
             }
-            field("customerPriceGroup"; "Customer Price Group")
+            field("customerPriceGroup"; Rec."Customer Price Group")
             {
                 ApplicationArea = All;
             }
-            field("creditLimit"; "Credit Limit (LCY)")
+            field("creditLimit"; Rec."Credit Limit (LCY)")
             {
                 ApplicationArea = All;
             }
-            field("salespersonCode"; "Salesperson Code")
+            field("salespersonCode"; Rec."Salesperson Code")
             {
                 ApplicationArea = All;
             }
-            field("allowLineDiscount"; "Allow Line Disc.")
+            field("allowLineDiscount"; Rec."Allow Line Disc.")
             {
                 ApplicationArea = All;
             }
-            field("invoiceDiscountCode"; "Invoice Disc. Code")
+            field("invoiceDiscountCode"; Rec."Invoice Disc. Code")
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

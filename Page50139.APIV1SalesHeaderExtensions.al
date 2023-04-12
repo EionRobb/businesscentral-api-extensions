@@ -17,19 +17,19 @@ page 50139 "Sales Header Extension"
     {
         area(Content)
         {
-            field("id"; "SystemId") { ApplicationArea = All; }
-            field("number"; "No.") { ApplicationArea = All; }
+            field("id"; Rec."SystemId") { ApplicationArea = All; }
+            field("number"; Rec."No.") { ApplicationArea = All; }
 
-            field(externalDocumentNumber; "External Document No.") { ApplicationArea = All; }
+            field(externalDocumentNumber; Rec."External Document No.") { ApplicationArea = All; }
 
-            field(yourReference; "Your Reference") { ApplicationArea = All; }
-            field(postingDescription; "Posting Description") { ApplicationArea = All; }
-            field(status; "Status")
+            field(yourReference; Rec."Your Reference") { ApplicationArea = All; }
+            field(postingDescription; Rec."Posting Description") { ApplicationArea = All; }
+            field(status; Rec."Status")
             {
                 ApplicationArea = All;
                 Editable = False;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
                 Editable = False;

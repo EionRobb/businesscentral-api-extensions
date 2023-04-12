@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50129 "CustomerPayments"
 {
     APIPublisher = 'Opmetrix';
@@ -20,13 +21,13 @@ page 50129 "CustomerPayments"
         {
             repeater(Group)
             {
-                field(id; SystemId)
+                field(id; Rec.SystemId)
                 {
                     Caption = 'id', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; SystemModifiedAt)
+                field(lastModifiedDateTime; Rec.SystemModifiedAt)
                 {
                     ApplicationArea = All;
                 }
@@ -42,9 +43,11 @@ page 50129 "CustomerPayments"
 
         ActionContext.SetObjectType(ObjectType::Page);
         ActionContext.SetObjectId(Page::CustomerPayments);
-        ActionContext.AddEntityKey(FieldNo(SystemId), Rec.SystemId);
+        ActionContext.AddEntityKey(Rec.FieldNo(SystemId), Rec.SystemId);
         ActionContext.SetResultCode(WebServiceActionResultCode::Deleted);
     end;
 }
+
+#pragma implicitwith restore
 
 

@@ -16,29 +16,29 @@ page 50126 TaxRates
     {
         area(Content)
         {
-            field(businessPostingGroup; "VAT Bus. Posting Group")
+            field(businessPostingGroup; Rec."VAT Bus. Posting Group")
             {
                 ApplicationArea = All;
             }
-            field(productPostingGroup; "VAT Prod. Posting Group")
+            field(productPostingGroup; Rec."VAT Prod. Posting Group")
             {
                 ApplicationArea = All;
             }
-            field(calculationType; "VAT Calculation Type")
+            field(calculationType; Rec."VAT Calculation Type")
             {
                 ApplicationArea = All;
             }
-            field(percentage; "VAT %")
+            field(percentage; Rec."VAT %")
             {
                 ApplicationArea = All;
             }
-            field(ID; "VAT Identifier")
+            field(ID; Rec."VAT Identifier")
             {
                 ApplicationArea = All;
             }
 
 
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

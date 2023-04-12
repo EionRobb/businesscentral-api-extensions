@@ -16,23 +16,23 @@ page 50123 "Customer Discount Extension"
     {
         area(Content)
         {
-            field("invoiceDiscountCode"; Code)
+            field("invoiceDiscountCode"; Rec.Code)
             {
                 ApplicationArea = All;
             }
-            field("minimumAmount"; "Minimum Amount")
+            field("minimumAmount"; Rec."Minimum Amount")
             {
                 ApplicationArea = All;
             }
-            field("discountPercent"; "Discount %")
+            field("discountPercent"; Rec."Discount %")
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }

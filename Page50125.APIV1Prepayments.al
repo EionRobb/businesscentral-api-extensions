@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50125 "Prepayments"
 {
     APIPublisher = 'Opmetrix';
@@ -20,47 +21,47 @@ page 50125 "Prepayments"
         {
             repeater(Group)
             {
-                field(SalesOrderId; SystemId)
+                field(SalesOrderId; Rec.SystemId)
                 {
                     Caption = 'SalesOrderId', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(SalesOrderNumber; "No.")
+                field(SalesOrderNumber; Rec."No.")
                 {
                     Caption = 'SalesOrderNumber', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(PrepaymentInvoiceNumber; "Last Prepayment No.")
+                field(PrepaymentInvoiceNumber; Rec."Last Prepayment No.")
                 {
                     Caption = 'PrepaymentInvoiceNumber', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(CustomerNumber; "Bill-to Customer No.")
+                field(CustomerNumber; Rec."Bill-to Customer No.")
                 {
                     Caption = 'CustomerNumber', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(ExternalDocumentNumber; "External Document No.")
+                field(ExternalDocumentNumber; Rec."External Document No.")
                 {
                     Caption = 'ExternalDocumentNumber', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(AmountIncludingVAT; "Amount Including VAT")
+                field(AmountIncludingVAT; Rec."Amount Including VAT")
                 {
                     Caption = 'AmountIncludingVAT', Locked = true;
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field(id; SystemId)
+                field(id; Rec.SystemId)
                 {
                     ApplicationArea = All;
                 }
-                field(lastModifiedDateTime; SystemModifiedAt)
+                field(lastModifiedDateTime; Rec.SystemModifiedAt)
                 {
                     ApplicationArea = All;
                 }
@@ -161,3 +162,4 @@ page 50125 "Prepayments"
         until salesOrderLines.Next() = 0;
     end;
 }
+#pragma implicitwith restore

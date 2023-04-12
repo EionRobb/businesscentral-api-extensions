@@ -16,43 +16,43 @@ page 50133 "Item Unit Of Measure"
     {
         area(Content)
         {
-            field("itemNumber"; "Item No.")
+            field("itemNumber"; Rec."Item No.")
             {
                 ApplicationArea = All;
             }
-            field("unitOfMeasureCode"; "Code")
+            field("unitOfMeasureCode"; Rec."Code")
             {
                 ApplicationArea = All;
             }
-            field("quantityPerUnitOfMeasure"; "Qty. per Unit of Measure")
+            field("quantityPerUnitOfMeasure"; Rec."Qty. per Unit of Measure")
             {
                 ApplicationArea = All;
             }
-            field("length"; Length)
+            field("length"; Rec.Length)
             {
                 ApplicationArea = All;
             }
-            field("width"; Width)
+            field("width"; Rec.Width)
             {
                 ApplicationArea = All;
             }
-            field("height"; Height)
+            field("height"; Rec.Height)
             {
                 ApplicationArea = All;
             }
-            field("cubage"; Cubage)
+            field("cubage"; Rec.Cubage)
             {
                 ApplicationArea = All;
             }
-            field("weight"; Weight)
+            field("weight"; Rec.Weight)
             {
                 ApplicationArea = All;
             }
-            field(id; SystemId)
+            field(id; Rec.SystemId)
             {
                 ApplicationArea = All;
             }
-            field(lastModifiedDateTime; SystemModifiedAt)
+            field(lastModifiedDateTime; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
             }
