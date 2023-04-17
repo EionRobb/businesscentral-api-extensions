@@ -10,14 +10,14 @@ query 50136 ItemCrossReferences
 
     elements
     {
-        dataitem(itemCrossReferences; "Item Cross Reference")
+        dataitem(itemCrossReferences; "Item Reference")
         {
             DataItemTableFilter = "Discontinue Bar Code" = CONST(False);
             column(itemNumber; "Item No.") { }
             column(variantCode; "Variant Code") { }
             column(unitOfMeasure; "Unit of Measure") { }
-            column("type"; "Cross-Reference Type") { }
-            column("number"; "Cross-Reference No.") { }
+            column("type"; "Reference Type") { }
+            column("number"; "Reference No.") { }
 
             column(id; SystemId) { }
             column(lastModifiedDateTime; SystemModifiedAt) { }
