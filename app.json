@@ -22,5 +22,6 @@
   ],
   "preprocessorSymbols": ["BUILD_REGION_AUNZ"],
   "contextSensitiveHelpUrl": "http://help.opmetrix.com/",
-  "runtime": "10.0"
+  "runtime": "10.0",
+  "resourceExposurePolicy": {"applyToDevExtension": true, "allowDebugging": true, "allowDownloadingSource": true, "includeSourceInSymbolFile": true}
 }
