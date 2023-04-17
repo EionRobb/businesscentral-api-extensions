@@ -12,7 +12,6 @@ query 50136 ItemCrossReferences
     {
         dataitem(itemCrossReferences; "Item Reference")
         {
-            DataItemTableFilter = "Discontinue Bar Code" = CONST(False);
             column(itemNumber; "Item No.") { }
             column(variantCode; "Variant Code") { }
             column(unitOfMeasure; "Unit of Measure") { }
