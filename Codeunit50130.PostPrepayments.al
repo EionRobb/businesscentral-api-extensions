@@ -905,6 +905,8 @@ codeunit 50130 "Post Prepayments"
         DimMgt: Codeunit DimensionManagement;
         TableID: array[10] of Integer;
         No: array[10] of Code[20];
+        // BC 23 Update                 
+        DefaultDimSource: List of [Dictionary of [Integer, Code[20]]];
     begin
         SourceCodeSetup.Get();
         TableID[1] := DATABASE::"G/L Account";
@@ -915,10 +917,19 @@ codeunit 50130 "Post Prepayments"
         No[3] := SalesLine."Responsibility Center";
         SalesLine."Shortcut Dimension 1 Code" := '';
         SalesLine."Shortcut Dimension 2 Code" := '';
-        SalesLine."Dimension Set ID" :=
-          DimMgt.GetRecDefaultDimID(
-            SalesLine, 0, TableID, No, SourceCodeSetup.Sales,
-            SalesLine."Shortcut Dimension 1 Code", SalesLine."Shortcut Dimension 2 Code", SalesLine."Dimension Set ID", DATABASE::Customer);
+
+        // Deprecated BC 23
+        //  SalesLine."Dimension Set ID" :=
+        //      DimMgt.GetRecDefaultDimID(
+        //        SalesLine, 0, TableID, No, SourceCodeSetup.Sales,
+        //      SalesLine."Shortcut Dimension 1 Code", SalesLine."Shortcut Dimension 2 Code", SalesLine."Dimension Set ID", DATABASE::Customer);                
+        // BC 23 Update                         
+        // https://learn.microsoft.com/en-us/dynamics365/business-central/application/base-application/codeunit/base-application-codeunit-dimensionmanagement        
+        // https://community.dynamics.com/forums/thread/details/?threadid=41e004d5-ff52-ee11-be6f-00224827ed7b
+        DimMgt.AddDimSource(DefaultDimSource, TableID[1], No[1]);
+        DimMgt.AddDimSource(DefaultDimSource, TableID[2], No[2]);
+        DimMgt.AddDimSource(DefaultDimSource, TableID[3], No[3]);
+        SalesLine."Dimension Set ID" := DimMgt.GetRecDefaultDimID(SalesLine, 0, DefaultDimSource, SourceCodeSetup.Sales, SalesLine."Shortcut Dimension 1 Code", SalesLine."Shortcut Dimension 2 Code", SalesLine."Dimension Set ID", DATABASE::Customer);
     end;
 
     local procedure GetPrepmtAccNo(GenBusPostingGroup: Code[20]; GenProdPostingGroup: Code[20]): Code[20]
@@ -1093,7 +1104,10 @@ codeunit 50130 "Post Prepayments"
         exit(Currency.GetRealizedLossesAccount);
     end;
 
-    local procedure PostPrepmtInvLineBuffer(SalesHeader: Record "Sales Header"; PrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20]; ExtDocNo: Text[35]; SrcCode: Code[10]; PostingNoSeriesCode: Code[20])
+    local procedure PostPrepmtInvLineBuffer(SalesHeader: Record "Sales Header"; PrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20];
+                                                                                                                                                                                                                                   ExtDocNo: Text[35];
+                                                                                                                                                                                                                                   SrcCode: Code[10];
+                                                                                                                                                                                                                                   PostingNoSeriesCode: Code[20])
     var
         GenJnlLine: Record "Gen. Journal Line";
     begin
@@ -1119,7 +1133,11 @@ codeunit 50130 "Post Prepayments"
         GenJnlPostLine.RunWithCheck(GenJnlLine);
     end;
 
-    local procedure PostCustomerEntry(SalesHeader: Record "Sales Header"; TotalPrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; TotalPrepmtInvLineBufferLCY: Record "Prepayment Inv. Line Buffer"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20]; ExtDocNo: Text[35]; SrcCode: Code[10]; PostingNoSeriesCode: Code[20]; CalcPmtDisc: Boolean)
+    local procedure PostCustomerEntry(SalesHeader: Record "Sales Header"; TotalPrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; TotalPrepmtInvLineBufferLCY: Record "Prepayment Inv. Line Buffer"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20];
+                                                                                                                                                                                                                                                                                                     ExtDocNo: Text[35];
+                                                                                                                                                                                                                                                                                                     SrcCode: Code[10];
+                                                                                                                                                                                                                                                                                                     PostingNoSeriesCode: Code[20];
+                                                                                                                                                                                                                                                                                                     CalcPmtDisc: Boolean)
     var
         GenJnlLine: Record "Gen. Journal Line";
     begin
@@ -1171,7 +1189,10 @@ codeunit 50130 "Post Prepayments"
         end;
     end;
 
-    local procedure PostBalancingEntry(SalesHeader: Record "Sales Header"; TotalPrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; TotalPrepmtInvLineBufferLCY: Record "Prepayment Inv. Line Buffer"; CustLedgEntry: Record "Cust. Ledger Entry"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20]; ExtDocNo: Text[35]; SrcCode: Code[10]; PostingNoSeriesCode: Code[20])
+    local procedure PostBalancingEntry(SalesHeader: Record "Sales Header"; TotalPrepmtInvLineBuffer: Record "Prepayment Inv. Line Buffer"; TotalPrepmtInvLineBufferLCY: Record "Prepayment Inv. Line Buffer"; CustLedgEntry: Record "Cust. Ledger Entry"; DocumentType: Option Invoice,"Credit Memo"; PostingDescription: Text[100]; DocType: Enum "Gen. Journal Document Type"; DocNo: Code[20];
+                                                                                                                                                                                                                                                                                                                                                  ExtDocNo: Text[35];
+                                                                                                                                                                                                                                                                                                                                                  SrcCode: Code[10];
+                                                                                                                                                                                                                                                                                                                                                  PostingNoSeriesCode: Code[20])
     var
         GenJnlLine: Record "Gen. Journal Line";
     begin
